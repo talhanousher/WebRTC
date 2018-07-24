@@ -44,7 +44,8 @@ $(function () {
 })
 
 function step1() {
-  navigator.getWebCam({ audio: false, video: true }, function (stream) {
+  navigator.getWebCam({ audio: true, video: true }, function (stream) {
+    console.log(URL.createObjectURL(stream));
     $('#my-video').prop('src', URL.createObjectURL(stream));
     window.localStream = stream;
     step2();
