@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Two Person Video Chat</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/0.3.9/peer.min.js"></script>
+    <script src="app.js"></script>
+</head>
+
+<body>
+    <div>
+        <div class="video-container">
+            Your Freind
+            <video id="their-video" autoplay></video>
+            <video id="my-video" autplay muted="false"></video>Me
+        </div>
+        <div>
+            <h2>Simple Video Chat</h2>
+            <div id="step1">
+                <p>Please click 'allow' on the top of the screen so that we can access your webcam and microphone</p>
+                <div id="step1-error">
+                    <p>Failed to access your webcam </p>
+                </div>
+                <a href="#" id="step1-retry" class="button">Try Again</a>
+            </div>
+            <div id="step2">
+                <p>Your Id :
+                    <span id="my-id">...</span>
+                </p>
+                <p>Share This id with others so that they can call you</p>
+                <p>
+                    <span id="subhead">Make a Call</span>
+                    <input type="text" placeholder="Call user id ..." id="callto-id">
+                    <a href="#" id="make-call">Call</a>
+                </p>
+            </div>
+            <div id="step3">
+                <p>Currently call with
+                    <span id="their-id">...</span>
+                </p>
+                <p>
+                    <a href="#" id="end-call">End Call</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
