@@ -4,7 +4,7 @@ navigator.getWebCam = (
   navigator.mozGetUserMedia ||
   navigator.msGetUserMedia
 );
-
+window.URL = window.URL || window.mozURL || window.msURL || window.webkitURL;
 var peer = new Peer({
   // key: '8zlrr93glgix80k9',
   debug: 3,
@@ -16,6 +16,7 @@ var peer = new Peer({
     ]
   }
 });
+console.log(peer);
 
 peer.on('open', function () {
   $('#my-id').text(peer.id);
@@ -29,6 +30,7 @@ peer.on('call', function (call) {
 $(function () {
   $('#make-call').click(function () {
     var call = peer.call($('#callto-id').val(), window.localStream);
+    console.log(call);
     step3(call);
   });
   $('#end-call').click(function () {
@@ -44,10 +46,34 @@ $(function () {
 })
 
 function step1() {
-  navigator.getWebCam({ audio: true, video: true }, function (stream) {
-    console.log(URL.createObjectURL(stream));
-    $('#my-video').prop('src', URL.createObjectURL(stream));
+  // navigator.mediaDevices.getUserMedia({ audio: false, video: true })
+  //   .then((stream) => {
+  //     console.log(URL.createObjectURL(stream));
+  //     if ($('#my-video')[0].srcObject == undefined) {
+  //       $('#my-video')[0].srcObject = stream;
+  //     }
+  //     else{
+  //       $('#my-video')[0].prop('src', URL.createObjectURL(stream));
+  //       window.localStream = stream;
+
+  //     }
+  //     console.log($('#my-video')[0]);
+  //     // $('#my-video')[0].play();
+  //     step2();
+  //   })
+  //   .catch(() => {
+  //     $('#step1-error').show();
+  //   })
+  navigator.getWebCam({ audio: false, video: true }, function (stream) {
+    // console.log(URL.createObjectURL(stream));
+    if ($('#my-video')[0].srcObject == null) {
+      $('#my-video')[0].srcObject = stream;
+    } else {
+      $('#my-video')[0].prop('src', URL.createObjectURL(stream));
+    }
     window.localStream = stream;
+    console.log($('#my-video')[0]);
+    // $('#my-video')[0][0].play();
     step2();
   }, function () {
     $('#step1-error').show();
@@ -64,11 +90,13 @@ function step3(call) {
     window.existingCall.close();
   }
   call.on('stream', function (stream) {
-    $('#their-video').prop('src', URL.createObjectURL(stream));
+    if ($('#their-video')[0].srcObject == null) {
+      $('#their-video')[0].srcObject = stream;
+    } else {
+      $('#their-video')[0].prop('src', URL.createObjectURL(stream));
+    }
   });
 
   $('#step1', '#step2').hide();
   $('#step3').show();
-
-
 }
